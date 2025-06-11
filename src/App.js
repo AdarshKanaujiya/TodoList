@@ -1,38 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import TodoInput from './components/TodoInput';
-import TodoList from './components/TodoList';
-import { useState } from'react';
-
-
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import TodoApp from "./components/TodoApp";
+import WeatherApp from "./components/WeatherApp";
+import GitHubDashboard from "./components/GitHubDashboard";
+import "./App.css";
 
 function App() {
-  const [listTodo, setListTodo] = useState([]);
-  let addList = (inputText)=>{
-    if(inputText !==""){
-      setListTodo([...listTodo, inputText]);
-    }
-  }
-
-  const deleteListItem = (key)=>{
-    let newListTodo = [...listTodo];
-    newListTodo.splice(key, 1);
-    setListTodo([...newListTodo]);
-  }
-
   return (
-    <div className="main-container">
-      <div className="center-container">
-        <TodoInput addList={addList}/>  
-        <h1 className="app-heading">TODO</h1>
-        <hr/>
-        {listTodo.map((listItem, i)=>{
-          return (
-          <TodoList key={i} index={i} item={listItem} deleteItem={deleteListItem}/>
-          )
-        })}
+    <Router>
+      <Navbar />
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/todo" element={<TodoApp/>} />
+          <Route path="/weather" element={<WeatherApp/>} />
+          <Route path="/github" element={<GitHubDashboard/>} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
